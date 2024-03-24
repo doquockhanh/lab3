@@ -7,6 +7,12 @@ TagManager:
   - map
   - winPlace
   - enemy
+  - exp0
+  - exp1
+  - exp2
+  - update
+  - bullet
+  - book
   layers:
   - Default
   - TransparentFX
@@ -14,11 +20,11 @@ TagManager:
   - player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - em
+  - emres
+  - player-bullet
+  - drop
+  - box
   - 
   - 
   - 
