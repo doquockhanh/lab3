@@ -7,9 +7,16 @@ public class enemyController : MonoBehaviour
     private Rigidbody2D rb;
     public int lucky = 25;
     public GameObject[] rewardPrefabs;
+    private Animator animator;
+    private CapsuleCollider2D enemyCollider;
+    private new AudioManager audio;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        enemyCollider = GetComponent<CapsuleCollider2D>();
+        audio = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -40,7 +47,32 @@ public class enemyController : MonoBehaviour
                     Instantiate(randomReward, transform.position, Quaternion.identity);
                 }
             }
-            Destroy(gameObject);
+            audio.PlaySFX(audio.hit);
+            animator.SetTrigger("Hit");
+            animator.SetBool("Dead", true);
+            rb.simulated = false;
+            enemyCollider.enabled = false;
+            goRandom goRandomComponent = gameObject.GetComponent<goRandom>();
+            if (goRandomComponent != null)
+            {
+                goRandomComponent.speed = 0f;
+            }
+            goFollow goFlowComponent = gameObject.GetComponent<goFollow>();
+            if (goFlowComponent != null)
+            {
+                goFlowComponent.moveSpeed = 0f;
+            }
+            StartCoroutine(DestroyAfterAnimation());
         }
     }
+
+    private IEnumerator DestroyAfterAnimation()
+    {
+        // Wait until the current death animation clip length
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
+
+        // Destroy the enemy GameObject
+        Destroy(gameObject);
+    }
 }
+

@@ -12,10 +12,14 @@ public class playerController : MonoBehaviour
     private bool facingRight = true;
     public Transform respawnPlace;
     public GameObject gun;
+    private Animator animator;
+    private new AudioManager audio;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         StartCoroutine(CountDown());
+        animator = GetComponent<Animator>();
+         audio = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
     }
 
     IEnumerator CountDown()
@@ -34,10 +38,18 @@ public class playerController : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0f).normalized * moveSpeed * Time.fixedDeltaTime;
+        if (moveHorizontal != 0f || moveVertical != 0f)
+        {
+            Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0f).normalized * moveSpeed * Time.fixedDeltaTime;
+            rb.MovePosition(transform.position + movement);
+            animator.SetBool("running", true);
+        }
+        else
+        {
+            animator.SetBool("running", false);
+        }
 
-        // Move the player
-        rb.MovePosition(transform.position + movement);
+
         // Flip the player if necessary
         if (moveHorizontal > 0 && !facingRight)
         {
@@ -73,6 +85,7 @@ public class playerController : MonoBehaviour
     {
         if (other.gameObject.tag == "update")
         {
+            audio.PlaySFX(audio.take);
             Gun g = gun.GetComponent<Gun>();
             g.updateFireRate += 0.1f;
         }

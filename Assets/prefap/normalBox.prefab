@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5009492415183199348}
   - component: {fileID: 6214010996322097398}
-  - component: {fileID: 2133201335099844916}
   - component: {fileID: 3729766298878388475}
+  - component: {fileID: 4850790866997461966}
   m_Layer: 10
   m_Name: normalBox
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.4684458, y: -5.436191, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1722126508, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  m_Sprite: {fileID: 2488325042269146774, guid: 3a193848c8d389f4c9eb72aa4a07aa1a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -86,7 +86,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2133201335099844916
+--- !u!114 &3729766298878388475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7339578130975737540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c2d3c1bb263b454b946fd2cbf017c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewardPrefabs:
+  - {fileID: 2742319860984861561, guid: acdcecf128384c44c966b7321b26b77b, type: 3}
+  - {fileID: 599923071337837089, guid: 574e48f9a4bc8244c8970867e44a8e40, type: 3}
+  - {fileID: 2742319860984861561, guid: acdcecf128384c44c966b7321b26b77b, type: 3}
+  - {fileID: 8528451245463690375, guid: 4abec5da8591dae4b992b8e4c07053cb, type: 3}
+  lucky: 50
+  disappearDelay: 2
+--- !u!61 &4850790866997461966
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,35 +137,16 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0019961074, y: 0.0044657886}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.055555556, y: 0.055555556, z: 0.055555556, w: 0.055555556}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.44444445, y: 0.44444445}
+    oldSize: {x: 46, y: 44}
     newSize: {x: 0.44444445, y: 0.44444445}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.29789686, y: 0.2927097}
+  m_Size: {x: 46, y: 44}
   m_EdgeRadius: 0
---- !u!114 &3729766298878388475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7339578130975737540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c2d3c1bb263b454b946fd2cbf017c44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rewardPrefabs:
-  - {fileID: 2742319860984861561, guid: acdcecf128384c44c966b7321b26b77b, type: 3}
-  - {fileID: 599923071337837089, guid: 574e48f9a4bc8244c8970867e44a8e40, type: 3}
-  - {fileID: 2742319860984861561, guid: acdcecf128384c44c966b7321b26b77b, type: 3}
-  - {fileID: 8528451245463690375, guid: 4abec5da8591dae4b992b8e4c07053cb, type: 3}
-  lucky: 50
-  disappearDelay: 2

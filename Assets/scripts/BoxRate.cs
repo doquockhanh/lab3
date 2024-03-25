@@ -8,10 +8,11 @@ public class BoxRate : MonoBehaviour
     public int lucky = 50;
     private bool isTouched = false;
     private float timer = 0f;
-    public float disappearDelay = 2f; // Thời gian trễ trước khi hộp biến mất
+    public float disappearDelay = 2f;
+    private new AudioManager audio;
     void Start()
     {
-
+        audio = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -19,20 +20,20 @@ public class BoxRate : MonoBehaviour
         if (isTouched)
         {
             timer += Time.deltaTime;
-            if (timer >= disappearDelay)
+        }
+        if (timer >= disappearDelay)
+        {
+            int unlucky = Random.Range(0, 100);
+            if (lucky > unlucky)
             {
-                int unlucky = Random.Range(0, 100);
-                if (lucky > unlucky)
+                int randomIndex = Random.Range(0, rewardPrefabs.Length);
+                GameObject randomReward = rewardPrefabs[randomIndex];
+                if (randomReward != null)
                 {
-                    int randomIndex = Random.Range(0, rewardPrefabs.Length);
-                    GameObject randomReward = rewardPrefabs[randomIndex];
-                    if (randomReward != null)
-                    {
-                        Instantiate(randomReward, transform.position, Quaternion.identity);
-                    }
+                    Instantiate(randomReward, transform.position, Quaternion.identity);
                 }
-                Destroy(gameObject);
             }
+            Destroy(gameObject);
         }
     }
 
@@ -40,7 +41,17 @@ public class BoxRate : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            audio.PlaySFX(audio.hit);
             isTouched = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("bullet"))
+        {
+            timer += 0.2f;
+            audio.PlaySFX(audio.hit);
         }
     }
 

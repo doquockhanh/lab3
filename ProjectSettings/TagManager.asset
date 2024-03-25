@@ -13,6 +13,7 @@ TagManager:
   - update
   - bullet
   - book
+  - audio
   layers:
   - Default
   - TransparentFX
