@@ -10,6 +10,7 @@ public class enemyController : MonoBehaviour
     private Animator animator;
     private CapsuleCollider2D enemyCollider;
     private new AudioManager audio;
+    public int hp = 1;
 
     void Start()
     {
@@ -37,32 +38,38 @@ public class enemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("bullet"))
         {
-            int unlucky = Random.Range(0, 100);
-            if (lucky > unlucky)
-            {
-                int randomIndex = Random.Range(0, rewardPrefabs.Length);
-                GameObject randomReward = rewardPrefabs[randomIndex];
-                if (randomReward != null)
-                {
-                    Instantiate(randomReward, transform.position, Quaternion.identity);
-                }
-            }
-            audio.PlaySFX(audio.hit);
+            hp--;
             animator.SetTrigger("Hit");
-            animator.SetBool("Dead", true);
-            rb.simulated = false;
-            enemyCollider.enabled = false;
-            goRandom goRandomComponent = gameObject.GetComponent<goRandom>();
-            if (goRandomComponent != null)
+            audio.PlaySFX(audio.hit);
+            if (hp <= 0)
             {
-                goRandomComponent.speed = 0f;
+                int unlucky = Random.Range(0, 100);
+                if (lucky > unlucky)
+                {
+                    int randomIndex = Random.Range(0, rewardPrefabs.Length);
+                    GameObject randomReward = rewardPrefabs[randomIndex];
+                    if (randomReward != null)
+                    {
+                        Instantiate(randomReward, transform.position, Quaternion.identity);
+                    }
+                }
+             
+                animator.SetBool("Dead", true);
+                rb.simulated = false;
+                enemyCollider.enabled = false;
+                goRandom goRandomComponent = gameObject.GetComponent<goRandom>();
+                if (goRandomComponent != null)
+                {
+                    goRandomComponent.speed = 0f;
+                }
+                goFollow goFlowComponent = gameObject.GetComponent<goFollow>();
+                if (goFlowComponent != null)
+                {
+                    goFlowComponent.moveSpeed = 0f;
+                }
+                StartCoroutine(DestroyAfterAnimation());
             }
-            goFollow goFlowComponent = gameObject.GetComponent<goFollow>();
-            if (goFlowComponent != null)
-            {
-                goFlowComponent.moveSpeed = 0f;
-            }
-            StartCoroutine(DestroyAfterAnimation());
+
         }
     }
 

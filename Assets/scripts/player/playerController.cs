@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class playerController : MonoBehaviour
 {
     public float moveSpeed = 4f;
-    public float timeRemaining = 60;
     public Text countdownText;
     private Rigidbody2D rb;
     private bool facingRight = true;
@@ -14,22 +13,15 @@ public class playerController : MonoBehaviour
     public GameObject gun;
     private Animator animator;
     private new AudioManager audio;
+    private int hp;
+    public GameObject gameOverPanel;
+    public HpManager healthManager;
     void Start()
     {
+        hp = PlayerPrefs.GetInt("Hp", 0);
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(CountDown());
         animator = GetComponent<Animator>();
-         audio = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
-    }
-
-    IEnumerator CountDown()
-    {
-        while (timeRemaining > 0)
-        {
-            yield return new WaitForSeconds(1);
-            timeRemaining--;
-            countdownText.text = "Time: " + timeRemaining.ToString();
-        }
+        audio = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -78,6 +70,12 @@ public class playerController : MonoBehaviour
         {
             transform.position = respawnPlace.position;
             rb.velocity = Vector3.zero;
+            hp--;
+            healthManager.UpdateHealth(-1);
+            if(hp <= 0) {
+                gameOverPanel.SetActive(true);
+                Time.timeScale = 0f;
+            }
         }
     }
 
